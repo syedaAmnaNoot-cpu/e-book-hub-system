@@ -1,0 +1,56 @@
+.landing-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background: linear-gradient(to right, #e0eafc, #cfdef3);
+  padding: 20px;
+}
+
+.landing-card {
+  background: white;
+  padding: 40px 30px;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  max-width: 380px;
+  width: 100%;
+}
+
+.landing-card h1 {
+  font-size: 28px;
+  color: #1a1a1a;
+  margin-bottom: 40px;
+  font-weight: 600;
+}
+
+.landing-btn {
+  display: block;
+  width: 100%;
+  padding: 14px;
+  margin: 12px 0;
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  color: white;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.landing-btn.guest {
+  background: #5c6bc0;
+}
+
+.landing-btn.login {
+  background: #3f51b5;
+}
+
+.landing-btn.signup {
+  background: #283593;
+}
+
+.landing-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
