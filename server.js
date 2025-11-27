@@ -1,4 +1,4 @@
-// backend/server.js - FINAL 100% WORKING (NO ERROR GUARANTEE)
+// backend/server.js - FINAL WORKING VERSION
 
 const express = require('express');
 const mongoose = require('mongoose');
@@ -18,33 +18,52 @@ app.use(cors({
 app.use(express.json({ limit: '10mb' }));
 app.use(express.urlencoded({ extended: true }));
 
-// Static folders (images serve karne ke liye)
+// Static folders
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
-app.use('/images', express.static(path.join(__dirname, 'public/images')));
 
 // MongoDB
 mongoose.connect(process.env.MONGO_URI || "mongodb://127.0.0.1:27017/amalreads")
-  .then(() => console.log('MongoDB Connected'))
+  .then(() => console.log('✅ MongoDB Connected'))
   .catch(err => {
-    console.error('MongoDB Error:', err);
+    console.error('❌ MongoDB Error:', err);
     process.exit(1);
   });
 
-// ROUTES - SABSE PEHLE
+// ✅ ROOT ROUTE - SABSE PEHLE
+app.get('/', (req, res) => {
+  res.json({ 
+    message: '🚀 Amalreads Backend Running!',
+    endpoints: {
+      auth: '/api/auth',
+      books: '/api/books',
+      health: '/api/health'
+    }
+  });
+});
+
+// ✅ HEALTH CHECK
+app.get('/api/health', (req, res) => {
+  res.json({ 
+    status: 'OK', 
+    message: 'Server is healthy!',
+    timestamp: new Date().toISOString()
+  });
+});
+
+// ✅ API ROUTES
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/books', require('./routes/books'));
 
-// Test route
-app.get('/', (req, res) => {
-  res.json({ message: 'Amalreads Backend Running!' });
-});
-
-// SABSE LAST MEIN - 404 handler (yehi galti thi pehle!)
-app.use((req, res) => {
-  res.status(404).json({ error: 'Route not found', path: req.originalUrl });
+// ✅ 404 HANDLER - SABSE LAST MEIN
+app.use('*', (req, res) => {
+  res.status(404).json({ 
+    error: 'Route not found', 
+    path: req.originalUrl 
+  });
 });
 
 const PORT = process.env.PORT || 5000;
+
 app.listen(PORT, () => {
-  console.log(`Server running on http://localhost:${PORT}`);
+  console.log(`✅ Server running on http://localhost:${PORT}`);
 });
